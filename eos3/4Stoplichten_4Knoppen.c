@@ -186,11 +186,12 @@ void core3_stage2() {
 }
 
 void blink(UI32 knop, UI32 bit1, UI32 bit2, UI32 bit3, UI32 delay) {
-    put32(EOS_GPSET0, 0x00000000 | BIT(bit1) | BIT(bit2) | BIT(bit3));
+    put32(EOS_GPSET0, 0x00000000 | BIT(bit1) | BIT(bit2));
   for(;;) {
     if(!(get32(EOS_GPLEV0) & BIT(knop)))	
     {  
 
+      put32(EOS_GPSET0, 0x00000000 | BIT(bit3));
       put32(EOS_GPCLR0, 0x00000000 | BIT(bit1));
       for(UI32 i = 0; i < delay; i++);
       put32(EOS_GPSET0, 0x00000000 | BIT(bit1));
@@ -199,7 +200,6 @@ void blink(UI32 knop, UI32 bit1, UI32 bit2, UI32 bit3, UI32 delay) {
       put32(EOS_GPSET0, 0x00000000 | BIT(bit2));
       put32(EOS_GPCLR0, 0x00000000 | BIT(bit3));
       for(UI32 i = 0; i < delay; i++);
-      put32(EOS_GPSET0, 0x00000000 | BIT(bit3));
 
     }
   }
